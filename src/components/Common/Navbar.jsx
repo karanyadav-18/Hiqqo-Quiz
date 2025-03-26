@@ -1,9 +1,13 @@
 import gsap from "gsap";
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import Header from "./Header";
+import { DataProvider } from "../../App";
 
 function Navbar() {
   const headerRef = useRef(null);
+  const location = useLocation();
+  const { page, setPage } = useContext(DataProvider);
   const [token, setToken] = useState(localStorage.getItem("token"));
   useEffect(() => {
     gsap.fromTo(
@@ -12,7 +16,7 @@ function Navbar() {
       { y: 0, duration: 0.8, ease: "power2.out" } // Final state
     );
   }, []);
-
+ 
   return (
     <header
       ref={headerRef}
@@ -30,26 +34,30 @@ function Navbar() {
             Hi<span className="text-gray-200">qq</span>o
           </h1>
         </Link>
+        {token && location.pathname != "/" && <Header />}
 
-        <nav className="w-3/4 justify-center flex text-[22px] font-bold">
-          <ul className="flex space-x-4">
-            <li>
-              <Link className="hover:border-b-4 transition-all duration-75">
-                Create Quiz
-              </Link>
-            </li>
-            <li>
-              <Link className="hover:border-b-4 transition-all duration-75">
-                Browse Quizzes
-              </Link>
-            </li>
-            {/* <li>
+        {location.pathname == "/" && (
+          <nav className="w-3/4 justify-center flex text-[22px] font-bold">
+            <ul className="flex space-x-4">
+              <li>
+                <Link className="hover:border-b-4 transition-all duration-75">
+                  Create Quiz
+                </Link>
+              </li>
+              <li>
+                <Link className="hover:border-b-4 transition-all duration-75">
+                  Browse Quizzes
+                </Link>
+              </li>
+              {/* <li>
               <a href="#" className="hover:text-blue-300">
                 Leaderboard
               </a>
             </li> */}
-          </ul>
-        </nav>
+            </ul>
+          </nav>
+        )}
+
         <div className="flex items-center gap-4 text-center">
           <Link className="btn p-2 text-white w-[100px]" to={"/login"}>
             {token ? "Dashboard" : "Login"}

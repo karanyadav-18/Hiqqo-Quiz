@@ -26,7 +26,7 @@ const quizCreate = async (req, res) => {
         const quizCode = Math.random().toString(36).substring(2, 8).toUpperCase();
         const quiz = new Quiz({ title, quizType, quizCode });
         await quiz.save();
-        return res.status(200).json({ message: "Quiz Created successfully!" });
+        return res.status(201).json({ message: "Quiz Created successfully!" });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }

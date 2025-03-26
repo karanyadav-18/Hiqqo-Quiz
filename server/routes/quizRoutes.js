@@ -4,7 +4,7 @@ const router = express.Router();
 const { quizCreate, updateQuiz, deleteQuiz, createQuestion, deleteQuestion , updateQuestion, searchQuiz} = require("../controllers/quizController");
 
 
-router.route('/quiz')
+router.route('/create-quiz')
     .post(quizCreate);
 
 // Update Quiz Route
